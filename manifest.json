@@ -1,0 +1,15 @@
+{
+  "name": "Echos",
+  "short_name": "Echos",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3062/3062634.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
