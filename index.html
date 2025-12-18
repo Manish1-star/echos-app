@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Echos</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- App Manifest & Icons (Stage 4 Complete) -->
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3062/3062634.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3062/3062634.png">
     <meta name="theme-color" content="#ffffff">
 </head>
 <body class="bg-white text-slate-800 font-inter antialiased select-none">
@@ -16,6 +28,8 @@
     <!-- LOGIN SCREEN -->
     <section id="login-screen" class="h-screen flex flex-col justify-center items-center p-6 bg-white z-50 absolute top-0 w-full">
         <div class="mb-10 text-center">
+            <!-- App Logo -->
+            <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" class="w-20 h-20 mx-auto mb-4 drop-shadow-md">
             <h1 class="text-5xl font-bold text-indigo-600 mb-2 tracking-tighter">Echos.</h1>
             <p class="text-gray-400">Your thoughts, amplified.</p>
         </div>
@@ -30,15 +44,21 @@
         
         <!-- HEADER -->
         <header class="fixed top-0 w-full bg-white/95 backdrop-blur border-b border-gray-100 z-40 px-4 py-3 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-indigo-600 tracking-tight" onclick="switchTab('home')">Echos</h1>
-            <!-- Small Avatar in Header -->
+            <div class="flex items-center gap-2" onclick="switchTab('home')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" class="w-6 h-6">
+                <h1 class="text-xl font-bold text-indigo-600 tracking-tight">Echos</h1>
+            </div>
+            <!-- Header Avatar -->
             <div id="header-avatar" class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border"></div>
         </header>
 
         <!-- VIEW 1: FEED (Home) -->
         <main id="feed-view" class="pt-16 px-0">
             <div id="feed-container" class="space-y-1">
-                <div class="p-8 text-center text-gray-400 mt-10">Loading thoughts...</div>
+                <div class="p-8 text-center text-gray-400 mt-10">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><br>
+                    Loading thoughts...
+                </div>
             </div>
         </main>
 
@@ -50,20 +70,21 @@
             <h2 id="profile-name" class="text-2xl font-bold text-gray-800">User Name</h2>
             <p id="profile-email" class="text-gray-500 text-sm mb-8">user@example.com</p>
 
-            <div class="bg-gray-50 p-6 rounded-2xl mb-8">
-                <p class="text-gray-400 text-sm">You are logged in via Google.</p>
+            <div class="bg-indigo-50 p-6 rounded-2xl mb-8 border border-indigo-100">
+                <h3 class="font-bold text-indigo-900 mb-1">Welcome back!</h3>
+                <p class="text-indigo-600 text-sm">You are logged in via Google.</p>
             </div>
 
-            <button onclick="logoutUser()" class="w-full py-3 rounded-xl bg-red-50 text-red-500 font-bold active:scale-95 transition-transform border border-red-100">
+            <button onclick="logoutUser()" class="w-full py-3 rounded-xl bg-red-50 text-red-500 font-bold active:scale-95 transition-transform border border-red-100 hover:bg-red-100">
                 <i class="fa-solid fa-power-off mr-2"></i> Sign Out
             </button>
         </div>
 
         <!-- VIEW 3: CREATE MODAL -->
-        <div id="create-view" class="hidden fixed inset-0 bg-white z-50 pt-16 px-4">
+        <div id="create-view" class="hidden fixed inset-0 bg-white z-50 pt-16 px-4 animate-fade-in">
             <div class="flex justify-between items-center mb-4">
                 <button id="close-create" class="text-gray-500 text-lg">Cancel</button>
-                <button id="publish-btn" class="bg-indigo-600 text-white px-5 py-2 rounded-full font-bold text-sm disabled:opacity-50">Post</button>
+                <button id="publish-btn" class="bg-indigo-600 text-white px-5 py-2 rounded-full font-bold text-sm disabled:opacity-50 shadow-lg shadow-indigo-200">Post</button>
             </div>
             <textarea id="post-input" class="w-full h-40 text-xl placeholder-gray-400 outline-none resize-none" placeholder="What's on your mind?"></textarea>
             
@@ -78,24 +99,25 @@
         <!-- BOTTOM NAVIGATION -->
         <nav class="fixed bottom-0 w-full bg-white border-t border-gray-100 pb-safe z-40">
             <div class="flex justify-around items-center h-16">
-                <!-- Home Button -->
-                <button id="nav-home" class="nav-btn text-indigo-600 w-16 h-full" onclick="switchTab('home')">
+                <!-- Home -->
+                <button id="nav-home" class="nav-btn text-indigo-600 w-16 h-full transition-colors" onclick="switchTab('home')">
                     <i class="fa-solid fa-house text-xl"></i>
                 </button>
                 
-                <!-- Create Button (Middle) -->
+                <!-- Create (Middle) -->
                 <button class="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center -mt-6 shadow-md shadow-indigo-200 active:scale-90 transition-transform" onclick="openCreate()">
                     <i class="fa-solid fa-plus text-xl"></i>
                 </button>
                 
-                <!-- Profile Button (With Image) -->
-                <button id="nav-profile" class="nav-btn text-gray-400 w-16 h-full flex justify-center items-center" onclick="switchTab('profile')">
+                <!-- Profile -->
+                <button id="nav-profile" class="nav-btn text-gray-400 w-16 h-full flex justify-center items-center transition-colors" onclick="switchTab('profile')">
                     <img id="nav-profile-img" src="https://via.placeholder.com/30" class="w-7 h-7 rounded-full border border-gray-300 object-cover">
                 </button>
             </div>
         </nav>
     </div>
 
+    <!-- Logic -->
     <script type="module" src="script.js"></script>
 </body>
 </html>
