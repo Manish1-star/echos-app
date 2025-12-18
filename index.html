@@ -27,21 +27,39 @@
 
     <!-- APP UI -->
     <div id="app-ui" class="hidden min-h-screen pb-20">
-        <!-- Header -->
+        
+        <!-- HEADER -->
         <header class="fixed top-0 w-full bg-white/95 backdrop-blur border-b border-gray-100 z-40 px-4 py-3 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-indigo-600 tracking-tight">Echos</h1>
-            <div id="user-avatar" class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border"></div>
+            <h1 class="text-xl font-bold text-indigo-600 tracking-tight" onclick="switchTab('home')">Echos</h1>
+            <!-- Small Avatar in Header -->
+            <div id="header-avatar" class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border"></div>
         </header>
 
-        <!-- Main Feed -->
+        <!-- VIEW 1: FEED (Home) -->
         <main id="feed-view" class="pt-16 px-0">
             <div id="feed-container" class="space-y-1">
-                <!-- Posts will load here -->
                 <div class="p-8 text-center text-gray-400 mt-10">Loading thoughts...</div>
             </div>
         </main>
 
-        <!-- Create Post Modal -->
+        <!-- VIEW 2: PROFILE -->
+        <div id="profile-view" class="hidden pt-24 px-6 text-center">
+            <div class="relative inline-block mb-4">
+                <img id="profile-large-img" src="" class="w-28 h-28 rounded-full border-4 border-indigo-50 shadow-sm object-cover mx-auto bg-gray-200">
+            </div>
+            <h2 id="profile-name" class="text-2xl font-bold text-gray-800">User Name</h2>
+            <p id="profile-email" class="text-gray-500 text-sm mb-8">user@example.com</p>
+
+            <div class="bg-gray-50 p-6 rounded-2xl mb-8">
+                <p class="text-gray-400 text-sm">You are logged in via Google.</p>
+            </div>
+
+            <button onclick="logoutUser()" class="w-full py-3 rounded-xl bg-red-50 text-red-500 font-bold active:scale-95 transition-transform border border-red-100">
+                <i class="fa-solid fa-power-off mr-2"></i> Sign Out
+            </button>
+        </div>
+
+        <!-- VIEW 3: CREATE MODAL -->
         <div id="create-view" class="hidden fixed inset-0 bg-white z-50 pt-16 px-4">
             <div class="flex justify-between items-center mb-4">
                 <button id="close-create" class="text-gray-500 text-lg">Cancel</button>
@@ -49,7 +67,6 @@
             </div>
             <textarea id="post-input" class="w-full h-40 text-xl placeholder-gray-400 outline-none resize-none" placeholder="What's on your mind?"></textarea>
             
-            <!-- Tags/Category Selection -->
             <div class="flex gap-2 mt-4 overflow-x-auto pb-2 no-scrollbar">
                 <span class="tag-select bg-indigo-50 text-indigo-600 px-4 py-2 rounded-full text-sm font-medium border border-indigo-100 whitespace-nowrap" data-tag="General">#General</span>
                 <span class="tag-select bg-gray-50 text-gray-500 px-4 py-2 rounded-full text-sm font-medium border border-gray-200 whitespace-nowrap" data-tag="Motivation">#Motivation</span>
@@ -58,12 +75,23 @@
             </div>
         </div>
 
-        <!-- Bottom Nav -->
+        <!-- BOTTOM NAVIGATION -->
         <nav class="fixed bottom-0 w-full bg-white border-t border-gray-100 pb-safe z-40">
             <div class="flex justify-around items-center h-16">
-                <button class="nav-btn text-indigo-600" onclick="switchTab('home')"><i class="fa-solid fa-house text-xl"></i></button>
-                <button class="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center -mt-6 shadow-md shadow-indigo-200 active:scale-90 transition-transform" onclick="openCreate()"><i class="fa-solid fa-plus text-xl"></i></button>
-                <button class="nav-btn text-gray-400" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket text-xl"></i></button>
+                <!-- Home Button -->
+                <button id="nav-home" class="nav-btn text-indigo-600 w-16 h-full" onclick="switchTab('home')">
+                    <i class="fa-solid fa-house text-xl"></i>
+                </button>
+                
+                <!-- Create Button (Middle) -->
+                <button class="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center -mt-6 shadow-md shadow-indigo-200 active:scale-90 transition-transform" onclick="openCreate()">
+                    <i class="fa-solid fa-plus text-xl"></i>
+                </button>
+                
+                <!-- Profile Button (With Image) -->
+                <button id="nav-profile" class="nav-btn text-gray-400 w-16 h-full flex justify-center items-center" onclick="switchTab('profile')">
+                    <img id="nav-profile-img" src="https://via.placeholder.com/30" class="w-7 h-7 rounded-full border border-gray-300 object-cover">
+                </button>
             </div>
         </nav>
     </div>
