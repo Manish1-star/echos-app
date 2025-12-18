@@ -13,5 +13,10 @@ body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparen
 }
 .animate-like { animation: likePop 0.3s ease-in-out; color: #ef4444 !important; }
 
-/* Custom utility for active tags */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+
 .tag-active { background-color: #4f46e5 !important; color: white !important; border-color: #4f46e5 !important; }
