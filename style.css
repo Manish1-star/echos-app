@@ -1,0 +1,17 @@
+body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+
+/* Hide Scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Animations */
+@keyframes likePop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+.animate-like { animation: likePop 0.3s ease-in-out; color: #ef4444 !important; }
+
+/* Custom utility for active tags */
+.tag-active { background-color: #4f46e5 !important; color: white !important; border-color: #4f46e5 !important; }
