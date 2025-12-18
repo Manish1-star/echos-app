@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Echos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body class="bg-white text-slate-800 font-inter antialiased select-none">
+
+    <!-- LOGIN SCREEN -->
+    <section id="login-screen" class="h-screen flex flex-col justify-center items-center p-6 bg-white z-50 absolute top-0 w-full">
+        <div class="mb-10 text-center">
+            <h1 class="text-5xl font-bold text-indigo-600 mb-2 tracking-tighter">Echos.</h1>
+            <p class="text-gray-400">Your thoughts, amplified.</p>
+        </div>
+        <button id="google-btn" class="flex items-center gap-3 bg-white border border-gray-200 shadow-lg active:scale-95 transition-transform px-8 py-4 rounded-full">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-6 h-6">
+            <span class="font-semibold text-gray-700">Continue with Google</span>
+        </button>
+    </section>
+
+    <!-- APP UI -->
+    <div id="app-ui" class="hidden min-h-screen pb-20">
+        <!-- Header -->
+        <header class="fixed top-0 w-full bg-white/95 backdrop-blur border-b border-gray-100 z-40 px-4 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-indigo-600 tracking-tight">Echos</h1>
+            <div id="user-avatar" class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border"></div>
+        </header>
+
+        <!-- Main Feed -->
+        <main id="feed-view" class="pt-16 px-0">
+            <div id="feed-container" class="space-y-1">
+                <!-- Posts will load here -->
+                <div class="p-8 text-center text-gray-400 mt-10">Loading thoughts...</div>
+            </div>
+        </main>
+
+        <!-- Create Post Modal -->
+        <div id="create-view" class="hidden fixed inset-0 bg-white z-50 pt-16 px-4">
+            <div class="flex justify-between items-center mb-4">
+                <button id="close-create" class="text-gray-500 text-lg">Cancel</button>
+                <button id="publish-btn" class="bg-indigo-600 text-white px-5 py-2 rounded-full font-bold text-sm disabled:opacity-50">Post</button>
+            </div>
+            <textarea id="post-input" class="w-full h-40 text-xl placeholder-gray-400 outline-none resize-none" placeholder="What's on your mind?"></textarea>
+            
+            <!-- Tags/Category Selection -->
+            <div class="flex gap-2 mt-4 overflow-x-auto pb-2 no-scrollbar">
+                <span class="tag-select bg-indigo-50 text-indigo-600 px-4 py-2 rounded-full text-sm font-medium border border-indigo-100 whitespace-nowrap" data-tag="General">#General</span>
+                <span class="tag-select bg-gray-50 text-gray-500 px-4 py-2 rounded-full text-sm font-medium border border-gray-200 whitespace-nowrap" data-tag="Motivation">#Motivation</span>
+                <span class="tag-select bg-gray-50 text-gray-500 px-4 py-2 rounded-full text-sm font-medium border border-gray-200 whitespace-nowrap" data-tag="Love">#Love</span>
+                <span class="tag-select bg-gray-50 text-gray-500 px-4 py-2 rounded-full text-sm font-medium border border-gray-200 whitespace-nowrap" data-tag="Sad">#Sad</span>
+            </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <nav class="fixed bottom-0 w-full bg-white border-t border-gray-100 pb-safe z-40">
+            <div class="flex justify-around items-center h-16">
+                <button class="nav-btn text-indigo-600" onclick="switchTab('home')"><i class="fa-solid fa-house text-xl"></i></button>
+                <button class="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center -mt-6 shadow-md shadow-indigo-200 active:scale-90 transition-transform" onclick="openCreate()"><i class="fa-solid fa-plus text-xl"></i></button>
+                <button class="nav-btn text-gray-400" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket text-xl"></i></button>
+            </div>
+        </nav>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
