@@ -4,36 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Echos</title>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- App Manifest & Icons (Stage 4 Complete) -->
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3062/3062634.png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3062/3062634.png">
-    <meta name="theme-color" content="#ffffff">
 </head>
-<body class="bg-white text-slate-800 font-inter antialiased select-none">
+<body class="bg-gray-50 text-slate-800 font-inter antialiased select-none overflow-x-hidden">
+
+    <!-- OVERLAY for Sidebar -->
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-[60] hidden transition-opacity"></div>
+
+    <!-- SIDEBAR (DRAWER) -->
+    <aside id="app-sidebar" class="fixed top-0 left-0 w-[75%] max-w-sm h-full bg-white z-[70] transform -translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
+        <div class="p-6 bg-indigo-600 text-white">
+            <div class="flex items-center gap-3 mb-4">
+                <img id="sidebar-img" src="https://via.placeholder.com/50" class="w-14 h-14 rounded-full border-2 border-white object-cover">
+                <div>
+                    <h3 id="sidebar-name" class="font-bold text-lg leading-tight">Guest</h3>
+                    <p id="sidebar-email" class="text-xs opacity-80">Sign in to sync</p>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 space-y-2">
+            <button onclick="switchTab('home'); toggleSidebar()" class="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl text-gray-700 font-medium">
+                <i class="fa-solid fa-house text-lg text-indigo-500"></i> Home
+            </button>
+            <button onclick="switchTab('profile'); toggleSidebar()" class="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl text-gray-700 font-medium">
+                <i class="fa-solid fa-user text-lg text-indigo-500"></i> My Profile
+            </button>
+            <button class="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl text-gray-700 font-medium">
+                <i class="fa-solid fa-heart text-lg text-red-500"></i> Favorites
+            </button>
+            <hr class="border-gray-100 my-2">
+            <button class="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl text-gray-700 font-medium">
+                <i class="fa-solid fa-gear text-lg text-gray-400"></i> Settings
+            </button>
+            <button onclick="logoutUser()" class="w-full flex items-center gap-4 p-3 hover:bg-red-50 rounded-xl text-red-500 font-medium">
+                <i class="fa-solid fa-right-from-bracket text-lg"></i> Sign Out
+            </button>
+        </div>
+    </aside>
 
     <!-- LOGIN SCREEN -->
     <section id="login-screen" class="h-screen flex flex-col justify-center items-center p-6 bg-white z-50 absolute top-0 w-full">
-        <div class="mb-10 text-center">
-            <!-- App Logo -->
-            <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" class="w-20 h-20 mx-auto mb-4 drop-shadow-md">
-            <h1 class="text-5xl font-bold text-indigo-600 mb-2 tracking-tighter">Echos.</h1>
-            <p class="text-gray-400">Your thoughts, amplified.</p>
-        </div>
-        <button id="google-btn" class="flex items-center gap-3 bg-white border border-gray-200 shadow-lg active:scale-95 transition-transform px-8 py-4 rounded-full">
+        <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" class="w-20 h-20 mb-6 drop-shadow-md">
+        <h1 class="text-4xl font-bold text-indigo-600 mb-2">Echos.</h1>
+        <p class="text-gray-400 mb-8">Share your world.</p>
+        <button id="google-btn" class="flex items-center gap-3 bg-white border border-gray-200 shadow-lg px-8 py-4 rounded-full active:scale-95 transition">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-6 h-6">
             <span class="font-semibold text-gray-700">Continue with Google</span>
         </button>
@@ -43,78 +62,80 @@
     <div id="app-ui" class="hidden min-h-screen pb-20">
         
         <!-- HEADER -->
-        <header class="fixed top-0 w-full bg-white/95 backdrop-blur border-b border-gray-100 z-40 px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-2" onclick="switchTab('home')">
-                <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" class="w-6 h-6">
-                <h1 class="text-xl font-bold text-indigo-600 tracking-tight">Echos</h1>
-            </div>
-            <!-- Header Avatar -->
+        <header class="fixed top-0 w-full bg-white/95 backdrop-blur border-b border-gray-100 z-40 px-4 py-3 flex justify-between items-center h-16">
+            <button onclick="toggleSidebar()" class="text-gray-700 p-2">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <h1 class="text-xl font-bold text-indigo-600">Echos</h1>
             <div id="header-avatar" class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border"></div>
         </header>
 
-        <!-- VIEW 1: FEED (Home) -->
+        <!-- FEED VIEW -->
         <main id="feed-view" class="pt-16 px-0">
-            <div id="feed-container" class="space-y-1">
-                <div class="p-8 text-center text-gray-400 mt-10">
-                    <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><br>
-                    Loading thoughts...
-                </div>
+            <div id="feed-container" class="space-y-2 pb-10">
+                <div class="p-10 text-center text-gray-400 mt-10">Loading...</div>
             </div>
         </main>
 
-        <!-- VIEW 2: PROFILE -->
-        <div id="profile-view" class="hidden pt-24 px-6 text-center">
-            <div class="relative inline-block mb-4">
-                <img id="profile-large-img" src="" class="w-28 h-28 rounded-full border-4 border-indigo-50 shadow-sm object-cover mx-auto bg-gray-200">
+        <!-- PROFILE VIEW -->
+        <div id="profile-view" class="hidden pt-20 px-4 text-center pb-24">
+            <div class="relative inline-block mb-4 group">
+                <img id="profile-large-img" src="" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover bg-gray-200">
+                <label for="profile-upload" class="absolute bottom-0 right-0 bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center cursor-pointer shadow-md">
+                    <i class="fa-solid fa-camera text-sm"></i>
+                </label>
+                <input type="file" id="profile-upload" class="hidden" accept="image/*">
             </div>
-            <h2 id="profile-name" class="text-2xl font-bold text-gray-800">User Name</h2>
-            <p id="profile-email" class="text-gray-500 text-sm mb-8">user@example.com</p>
-
-            <div class="bg-indigo-50 p-6 rounded-2xl mb-8 border border-indigo-100">
-                <h3 class="font-bold text-indigo-900 mb-1">Welcome back!</h3>
-                <p class="text-indigo-600 text-sm">You are logged in via Google.</p>
-            </div>
-
-            <button onclick="logoutUser()" class="w-full py-3 rounded-xl bg-red-50 text-red-500 font-bold active:scale-95 transition-transform border border-red-100 hover:bg-red-100">
-                <i class="fa-solid fa-power-off mr-2"></i> Sign Out
-            </button>
-        </div>
-
-        <!-- VIEW 3: CREATE MODAL -->
-        <div id="create-view" class="hidden fixed inset-0 bg-white z-50 pt-16 px-4 animate-fade-in">
-            <div class="flex justify-between items-center mb-4">
-                <button id="close-create" class="text-gray-500 text-lg">Cancel</button>
-                <button id="publish-btn" class="bg-indigo-600 text-white px-5 py-2 rounded-full font-bold text-sm disabled:opacity-50 shadow-lg shadow-indigo-200">Post</button>
-            </div>
-            <textarea id="post-input" class="w-full h-40 text-xl placeholder-gray-400 outline-none resize-none" placeholder="What's on your mind?"></textarea>
+            <h2 id="profile-name" class="text-2xl font-bold text-gray-800">User</h2>
+            <p id="profile-email" class="text-gray-500 text-sm mb-6">user@echo.com</p>
             
-            <div class="flex gap-2 mt-4 overflow-x-auto pb-2 no-scrollbar">
-                <span class="tag-select bg-indigo-50 text-indigo-600 px-4 py-2 rounded-full text-sm font-medium border border-indigo-100 whitespace-nowrap" data-tag="General">#General</span>
-                <span class="tag-select bg-gray-50 text-gray-500 px-4 py-2 rounded-full text-sm font-medium border border-gray-200 whitespace-nowrap" data-tag="Motivation">#Motivation</span>
-                <span class="tag-select bg-gray-50 text-gray-500 px-4 py-2 rounded-full text-sm font-medium border border-gray-200 whitespace-nowrap" data-tag="Love">#Love</span>
-                <span class="tag-select bg-gray-50 text-gray-500 px-4 py-2 rounded-full text-sm font-medium border border-gray-200 whitespace-nowrap" data-tag="Sad">#Sad</span>
+            <div class="grid grid-cols-2 gap-3 text-left">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                    <span class="text-2xl font-bold text-indigo-600 block" id="my-post-count">0</span>
+                    <span class="text-xs text-gray-400 font-bold uppercase">Posts</span>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                    <span class="text-2xl font-bold text-pink-500 block">Active</span>
+                    <span class="text-xs text-gray-400 font-bold uppercase">Status</span>
+                </div>
             </div>
         </div>
 
-        <!-- BOTTOM NAVIGATION -->
-        <nav class="fixed bottom-0 w-full bg-white border-t border-gray-100 pb-safe z-40">
-            <div class="flex justify-around items-center h-16">
-                <!-- Home -->
-                <button id="nav-home" class="nav-btn text-indigo-600 w-16 h-full transition-colors" onclick="switchTab('home')">
-                    <i class="fa-solid fa-house text-xl"></i>
-                </button>
-                
-                <!-- Create (Middle) -->
-                <button class="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center -mt-6 shadow-md shadow-indigo-200 active:scale-90 transition-transform" onclick="openCreate()">
-                    <i class="fa-solid fa-plus text-xl"></i>
-                </button>
-                
-                <!-- Profile -->
-                <button id="nav-profile" class="nav-btn text-gray-400 w-16 h-full flex justify-center items-center transition-colors" onclick="switchTab('profile')">
-                    <img id="nav-profile-img" src="https://via.placeholder.com/30" class="w-7 h-7 rounded-full border border-gray-300 object-cover">
-                </button>
+        <!-- CREATE POST MODAL -->
+        <div id="create-view" class="hidden fixed inset-0 bg-white z-[80] pt-0 flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100">
+                <button id="close-create" class="text-gray-500 text-lg">Cancel</button>
+                <button id="publish-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-full font-bold text-sm shadow-md">Post</button>
             </div>
-        </nav>
+            <div class="p-4 flex-1">
+                <textarea id="post-input" class="w-full h-32 text-xl placeholder-gray-400 outline-none resize-none" placeholder="What's on your mind?"></textarea>
+                
+                <!-- Image Preview -->
+                <div id="image-preview-container" class="hidden relative mb-4 rounded-xl overflow-hidden border border-gray-200">
+                    <img id="image-preview" class="w-full max-h-60 object-cover">
+                    <button onclick="removeImage()" class="absolute top-2 right-2 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="flex items-center gap-4 mt-2">
+                    <label for="post-image-upload" class="text-indigo-600 flex items-center gap-2 cursor-pointer font-medium p-2 bg-indigo-50 rounded-lg">
+                        <i class="fa-regular fa-image text-xl"></i> Add Photo
+                    </label>
+                    <input type="file" id="post-image-upload" class="hidden" accept="image/*">
+                </div>
+
+                <div class="flex gap-2 mt-6 overflow-x-auto no-scrollbar">
+                    <span class="tag-select bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" data-tag="General">#General</span>
+                    <span class="tag-select bg-gray-100 text-gray-500 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" data-tag="Love">#Love</span>
+                    <span class="tag-select bg-gray-100 text-gray-500 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" data-tag="Funny">#Funny</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAB (Floating Action Button) -->
+        <button onclick="openCreate()" class="fixed bottom-6 right-6 bg-indigo-600 text-white w-14 h-14 rounded-full shadow-lg shadow-indigo-300 flex items-center justify-center z-40 active:scale-90 transition-transform">
+            <i class="fa-solid fa-plus text-2xl"></i>
+        </button>
+
     </div>
 
     <!-- Logic -->
