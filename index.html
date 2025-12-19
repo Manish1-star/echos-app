@@ -13,75 +13,64 @@
 </head>
 <body class="bg-gray-50 text-slate-800 font-inter antialiased select-none overflow-x-hidden">
 
-    <!-- OVERLAY for Sidebar -->
-    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-[60] hidden transition-opacity"></div>
+    <!-- OVERLAY -->
+    <div id="overlay" onclick="closeAllModals()" class="fixed inset-0 bg-black/60 z-[60] hidden transition-opacity backdrop-blur-sm"></div>
 
-    <!-- SIDEBAR (DRAWER) -->
-    <aside id="app-sidebar" class="fixed top-0 left-0 w-[75%] max-w-sm h-full bg-white z-[70] transform -translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
-        <div class="p-6 bg-indigo-600 text-white">
-            <div class="flex items-center gap-3 mb-4">
-                <img id="sidebar-img" src="https://via.placeholder.com/50" class="w-14 h-14 rounded-full border-2 border-white object-cover">
+    <!-- SIDEBAR -->
+    <aside id="app-sidebar" class="fixed top-0 left-0 w-[80%] max-w-sm h-full bg-white z-[70] transform -translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
+        <div class="p-6 bg-gradient-to-br from-indigo-600 to-purple-700 text-white relative">
+            <button onclick="toggleSidebar()" class="absolute top-4 right-4 text-white/80"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="flex items-center gap-3 mb-2 mt-4">
+                <img id="sidebar-img" src="https://via.placeholder.com/50" class="w-16 h-16 rounded-full border-4 border-white/30 object-cover">
                 <div>
-                    <h3 id="sidebar-name" class="font-bold text-lg leading-tight">Guest</h3>
-                    <p id="sidebar-email" class="text-xs opacity-80">Sign in to sync</p>
+                    <h3 id="sidebar-name" class="font-bold text-xl leading-tight">Guest</h3>
+                    <p class="text-xs opacity-80 bg-white/20 px-2 py-1 rounded-full inline-block mt-1">Online</p>
                 </div>
             </div>
         </div>
-        <div class="p-4 space-y-2">
-            <button onclick="switchTab('home'); toggleSidebar()" class="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl text-gray-700 font-medium">
-                <i class="fa-solid fa-house text-lg text-indigo-500"></i> Home
-            </button>
-            <button onclick="switchTab('profile'); toggleSidebar()" class="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl text-gray-700 font-medium">
-                <i class="fa-solid fa-user text-lg text-indigo-500"></i> My Profile
-            </button>
-            <button class="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl text-gray-700 font-medium">
-                <i class="fa-solid fa-heart text-lg text-red-500"></i> Favorites
-            </button>
+        <div class="p-4 space-y-1">
+            <button onclick="switchTab('home'); toggleSidebar()" class="menu-item"><i class="fa-solid fa-house text-indigo-500"></i> Home Feed</button>
+            <button onclick="switchTab('profile'); toggleSidebar()" class="menu-item"><i class="fa-solid fa-user text-indigo-500"></i> My Profile</button>
+            <button onclick="openPrivacy(); toggleSidebar()" class="menu-item"><i class="fa-solid fa-shield-halved text-gray-500"></i> Privacy Policy</button>
             <hr class="border-gray-100 my-2">
-            <button class="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl text-gray-700 font-medium">
-                <i class="fa-solid fa-gear text-lg text-gray-400"></i> Settings
-            </button>
-            <button onclick="logoutUser()" class="w-full flex items-center gap-4 p-3 hover:bg-red-50 rounded-xl text-red-500 font-medium">
-                <i class="fa-solid fa-right-from-bracket text-lg"></i> Sign Out
-            </button>
+            <button onclick="logoutUser()" class="menu-item text-red-500 hover:bg-red-50"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</button>
         </div>
     </aside>
 
     <!-- LOGIN SCREEN -->
     <section id="login-screen" class="h-screen flex flex-col justify-center items-center p-6 bg-white z-50 absolute top-0 w-full">
-        <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" class="w-20 h-20 mb-6 drop-shadow-md">
-        <h1 class="text-4xl font-bold text-indigo-600 mb-2">Echos.</h1>
-        <p class="text-gray-400 mb-8">Share your world.</p>
-        <button id="google-btn" class="flex items-center gap-3 bg-white border border-gray-200 shadow-lg px-8 py-4 rounded-full active:scale-95 transition">
+        <div class="animate-bounce mb-4"><img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" class="w-24 h-24 drop-shadow-xl"></div>
+        <h1 class="text-4xl font-bold text-indigo-600 mb-2 tracking-tight">Echos</h1>
+        <p class="text-gray-400 mb-10 text-center max-w-xs">Connect, Share, and Chat with your friends.</p>
+        <button id="google-btn" class="flex items-center gap-3 bg-white border border-gray-200 shadow-xl px-8 py-4 rounded-full active:scale-95 transition-all">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-6 h-6">
-            <span class="font-semibold text-gray-700">Continue with Google</span>
+            <span class="font-bold text-gray-700">Continue with Google</span>
         </button>
     </section>
 
     <!-- APP UI -->
-    <div id="app-ui" class="hidden min-h-screen pb-20">
-        
-        <!-- HEADER -->
-        <header class="fixed top-0 w-full bg-white/95 backdrop-blur border-b border-gray-100 z-40 px-4 py-3 flex justify-between items-center h-16">
-            <button onclick="toggleSidebar()" class="text-gray-700 p-2">
+    <div id="app-ui" class="hidden min-h-screen pb-24">
+        <!-- Header -->
+        <header class="fixed top-0 w-full bg-white/95 backdrop-blur border-b border-gray-100 z-40 px-4 h-16 flex justify-between items-center shadow-sm">
+            <button onclick="toggleSidebar()" class="w-10 h-10 flex items-center justify-center text-gray-700 active:bg-gray-100 rounded-full">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
-            <h1 class="text-xl font-bold text-indigo-600">Echos</h1>
-            <div id="header-avatar" class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border"></div>
+            <h1 class="text-xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Echos</h1>
+            <div id="header-avatar" class="w-9 h-9 rounded-full bg-gray-200 overflow-hidden border border-gray-300"></div>
         </header>
 
-        <!-- FEED VIEW -->
+        <!-- Feed View -->
         <main id="feed-view" class="pt-16 px-0">
-            <div id="feed-container" class="space-y-2 pb-10">
-                <div class="p-10 text-center text-gray-400 mt-10">Loading...</div>
+            <div id="feed-container" class="pb-10 min-h-[50vh]">
+                <div class="p-10 text-center text-gray-400 mt-10"><i class="fa-solid fa-spinner fa-spin text-2xl"></i><br>Connecting...</div>
             </div>
         </main>
 
-        <!-- PROFILE VIEW -->
+        <!-- Profile View -->
         <div id="profile-view" class="hidden pt-20 px-4 text-center pb-24">
             <div class="relative inline-block mb-4 group">
-                <img id="profile-large-img" src="" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover bg-gray-200">
-                <label for="profile-upload" class="absolute bottom-0 right-0 bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center cursor-pointer shadow-md">
+                <img id="profile-large-img" src="" class="w-32 h-32 rounded-full border-4 border-white shadow-xl object-cover bg-gray-200">
+                <label for="profile-upload" class="absolute bottom-1 right-1 bg-indigo-600 text-white w-9 h-9 rounded-full flex items-center justify-center cursor-pointer shadow-lg active:scale-90 transition">
                     <i class="fa-solid fa-camera text-sm"></i>
                 </label>
                 <input type="file" id="profile-upload" class="hidden" accept="image/*">
@@ -89,56 +78,112 @@
             <h2 id="profile-name" class="text-2xl font-bold text-gray-800">User</h2>
             <p id="profile-email" class="text-gray-500 text-sm mb-6">user@echo.com</p>
             
-            <div class="grid grid-cols-2 gap-3 text-left">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                    <span class="text-2xl font-bold text-indigo-600 block" id="my-post-count">0</span>
-                    <span class="text-xs text-gray-400 font-bold uppercase">Posts</span>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                    <span class="text-2xl font-bold text-pink-500 block">Active</span>
-                    <span class="text-xs text-gray-400 font-bold uppercase">Status</span>
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-4">
+                <h3 class="font-bold text-gray-400 text-xs uppercase mb-3">Stats</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><span class="text-xl font-bold text-indigo-600" id="stat-posts">0</span><br><span class="text-xs text-gray-400">Posts</span></div>
+                    <div><span class="text-xl font-bold text-green-500" id="stat-likes">0</span><br><span class="text-xs text-gray-400">Likes</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- CREATE POST MODAL -->
-        <div id="create-view" class="hidden fixed inset-0 bg-white z-[80] pt-0 flex flex-col">
-            <div class="flex justify-between items-center p-4 border-b border-gray-100">
-                <button id="close-create" class="text-gray-500 text-lg">Cancel</button>
-                <button id="publish-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-full font-bold text-sm shadow-md">Post</button>
-            </div>
-            <div class="p-4 flex-1">
-                <textarea id="post-input" class="w-full h-32 text-xl placeholder-gray-400 outline-none resize-none" placeholder="What's on your mind?"></textarea>
-                
-                <!-- Image Preview -->
-                <div id="image-preview-container" class="hidden relative mb-4 rounded-xl overflow-hidden border border-gray-200">
-                    <img id="image-preview" class="w-full max-h-60 object-cover">
-                    <button onclick="removeImage()" class="absolute top-2 right-2 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-
-                <div class="flex items-center gap-4 mt-2">
-                    <label for="post-image-upload" class="text-indigo-600 flex items-center gap-2 cursor-pointer font-medium p-2 bg-indigo-50 rounded-lg">
-                        <i class="fa-regular fa-image text-xl"></i> Add Photo
-                    </label>
-                    <input type="file" id="post-image-upload" class="hidden" accept="image/*">
-                </div>
-
-                <div class="flex gap-2 mt-6 overflow-x-auto no-scrollbar">
-                    <span class="tag-select bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" data-tag="General">#General</span>
-                    <span class="tag-select bg-gray-100 text-gray-500 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" data-tag="Love">#Love</span>
-                    <span class="tag-select bg-gray-100 text-gray-500 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" data-tag="Funny">#Funny</span>
-                </div>
-            </div>
+        <!-- Chat View (List of Users) -->
+        <div id="chat-list-view" class="hidden pt-16 px-0">
+             <div class="p-4 bg-gray-50 border-b border-gray-200">
+                <h2 class="font-bold text-lg">Recent Chats</h2>
+             </div>
+             <div id="chat-list-container" class="divide-y divide-gray-100 bg-white">
+                 <!-- Chat users load here -->
+                 <div class="p-8 text-center text-gray-400">Click a user's profile on Feed to message them.</div>
+             </div>
         </div>
-
-        <!-- FAB (Floating Action Button) -->
-        <button onclick="openCreate()" class="fixed bottom-6 right-6 bg-indigo-600 text-white w-14 h-14 rounded-full shadow-lg shadow-indigo-300 flex items-center justify-center z-40 active:scale-90 transition-transform">
-            <i class="fa-solid fa-plus text-2xl"></i>
-        </button>
-
     </div>
 
-    <!-- Logic -->
+    <!-- MODALS -->
+    
+    <!-- 1. Create Post Modal -->
+    <div id="create-view" class="fixed inset-0 bg-white z-[80] hidden flex-col animate-slide-up">
+        <div class="flex justify-between items-center p-4 border-b border-gray-100">
+            <button onclick="closeAllModals()" class="text-gray-500">Cancel</button>
+            <button id="publish-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-full font-bold text-sm shadow-lg shadow-indigo-200">Post</button>
+        </div>
+        <div class="p-4 flex-1 overflow-y-auto">
+            <textarea id="post-input" class="w-full h-32 text-xl placeholder-gray-400 outline-none resize-none" placeholder="What's happening?"></textarea>
+            
+            <div id="image-preview-container" class="hidden relative mb-4 rounded-xl overflow-hidden border border-gray-200">
+                <img id="image-preview" class="w-full max-h-64 object-cover">
+                <button onclick="removeImage()" class="absolute top-2 right-2 bg-black/60 text-white rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <label for="post-image-upload" class="flex items-center gap-3 p-3 bg-indigo-50 text-indigo-700 rounded-xl font-medium cursor-pointer mb-4 active:bg-indigo-100 transition">
+                <i class="fa-regular fa-image text-xl"></i> Add Photo
+            </label>
+            <input type="file" id="post-image-upload" class="hidden" accept="image/*">
+            
+            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                <span class="tag-select bg-indigo-600 text-white px-4 py-2 rounded-full text-sm border border-indigo-600" data-tag="General">#General</span>
+                <span class="tag-select bg-white text-gray-500 px-4 py-2 rounded-full text-sm border border-gray-200" data-tag="Love">#Love</span>
+                <span class="tag-select bg-white text-gray-500 px-4 py-2 rounded-full text-sm border border-gray-200" data-tag="Sad">#Sad</span>
+                <span class="tag-select bg-white text-gray-500 px-4 py-2 rounded-full text-sm border border-gray-200" data-tag="Funny">#Funny</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Comment Modal -->
+    <div id="comment-modal" class="fixed bottom-0 left-0 w-full h-[70vh] bg-white z-[90] rounded-t-3xl shadow-[0_-5px_20px_rgba(0,0,0,0.1)] hidden flex-col transform transition-transform duration-300 translate-y-full">
+        <div class="p-4 border-b border-gray-100 flex justify-between items-center">
+            <h3 class="font-bold text-lg">Comments</h3>
+            <button onclick="closeAllModals()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="comments-list" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+            <!-- Comments go here -->
+        </div>
+        <div class="p-3 border-t border-gray-100 bg-white flex gap-2 items-center pb-safe">
+            <img id="comment-user-img" src="" class="w-8 h-8 rounded-full bg-gray-200">
+            <input type="text" id="comment-input" class="flex-1 bg-gray-100 rounded-full px-4 py-2 outline-none" placeholder="Add a comment...">
+            <button id="send-comment-btn" class="text-indigo-600 font-bold px-3 disabled:opacity-50">Post</button>
+        </div>
+    </div>
+
+    <!-- 3. Chat Room Modal -->
+    <div id="chat-modal" class="fixed inset-0 bg-white z-[100] hidden flex-col">
+        <div class="p-3 border-b border-gray-100 flex items-center gap-3 shadow-sm z-10">
+            <button onclick="closeChat()" class="text-gray-600 p-2"><i class="fa-solid fa-arrow-left text-xl"></i></button>
+            <img id="chat-header-img" src="" class="w-10 h-10 rounded-full bg-gray-200 object-cover">
+            <div>
+                <h3 id="chat-header-name" class="font-bold text-sm leading-none">User</h3>
+                <span class="text-xs text-green-500">Online</span>
+            </div>
+        </div>
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+            <!-- Messages go here -->
+        </div>
+        <div class="p-3 bg-white border-t border-gray-100 flex gap-2 items-center pb-safe">
+            <input type="text" id="chat-input" class="flex-1 bg-gray-100 rounded-full px-4 py-3 outline-none" placeholder="Type a message...">
+            <button id="send-chat-btn" class="bg-indigo-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md active:scale-90"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- 4. Privacy Policy Modal -->
+    <div id="privacy-modal" class="fixed inset-0 bg-white z-[95] hidden flex-col pt-10 px-6 animate-slide-up">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold">Privacy Policy</h2>
+            <button onclick="closeAllModals()" class="w-10 h-10 bg-gray-100 rounded-full"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="overflow-y-auto text-gray-600 space-y-4 pb-10 text-sm leading-relaxed">
+            <p><strong>1. Introduction:</strong> Welcome to Echos. We respect your privacy.</p>
+            <p><strong>2. Data We Collect:</strong> We collect your name, email, and photo from Google. We store the posts and photos you upload.</p>
+            <p><strong>3. Content:</strong> Anything you post is public. Please do not share sensitive information.</p>
+            <p><strong>4. Deletion:</strong> You can delete your posts anytime. You can contact us to delete your account.</p>
+            <p><strong>5. Contact:</strong> For any queries, contact support@echos.app.</p>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button onclick="openCreate()" class="fixed bottom-6 right-6 bg-indigo-600 text-white w-14 h-14 rounded-full shadow-lg shadow-indigo-300 flex items-center justify-center z-30 active:scale-90 transition-transform">
+        <i class="fa-solid fa-plus text-2xl"></i>
+    </button>
+
     <script type="module" src="script.js"></script>
 </body>
 </html>
