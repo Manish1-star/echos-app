@@ -1,22 +1,7 @@
 body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
 .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
-
-/* Hide Scrollbar */
 .no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* Animations */
-@keyframes likePop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.4); }
-    100% { transform: scale(1); }
-}
-.animate-like { animation: likePop 0.3s ease-in-out; color: #ef4444 !important; }
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
-
-.tag-active { background-color: #4f46e5 !important; color: white !important; border-color: #4f46e5 !important; }
+.menu-item { width: 100%; display: flex; align-items: center; gap: 1rem; padding: 0.75rem; border-radius: 0.75rem; color: #374151; font-weight: 500; transition: background-color 0.2s; }
+.menu-item:active { background-color: #f3f4f6; }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.animate-slide-up { animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
